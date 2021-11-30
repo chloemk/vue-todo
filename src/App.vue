@@ -2,31 +2,37 @@
 	<main class="main-wrapper">
 		<h1 class="page-title">TODO-LIST</h1>
 		<p class="subtitle">Let's get things done!</p>
-		<div class="new-task-wrapper">
-			<input
-				class="new-task-input"
-				type="text"
-				placeholder="Type here to create"
-			/>
-			<button class="new-task-button">+ Add</button>
-		</div>
+		<task-input></task-input>
 		<nav>
 			<ul class="tab-wrapper">
 				<li class="tab-item is-active">
 					<button class="tab-button">All</button>
 				</li>
 				<li class="tab-item">
-					<button class="tab-button">Current</button>
-				</li>
-				<li class="tab-item">
-					<button class="tab-button">Completed</button>
+					<button @click="clearTodo" class="tab-button">Clear</button>
 				</li>
 			</ul>
 		</nav>
+		<task-list></task-list>
 	</main>
 </template>
 
-<script setup></script>
+<script>
+import TaskInput from './components/TaskInput.vue';
+import TaskList from './components/TaskList.vue';
+
+export default {
+	components: {
+		'task-input': TaskInput,
+		'task-list': TaskList,
+	},
+	methods: {
+		clearTodo: function () {
+			localStorage.clear();
+		},
+	},
+};
+</script>
 
 <style>
 html {
@@ -38,32 +44,6 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 16px;
-}
-
-.new-task-wrapper {
-	display: flex;
-}
-
-.new-task-input {
-	padding: 16px;
-	color: #959595;
-	border: none;
-	flex: 1;
-	font-weight: bold;
-	border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-	box-shadow: 2px 4px 5px 1px rgba(0, 0, 0, 0.23);
-	letter-spacing: 0.8px;
-}
-
-.new-task-button {
-	padding: 18px 24px;
-	background-color: #e8b4b8;
-	color: #fff;
-	font-weight: bold;
-	border-top-right-radius: 7px;
-	border-bottom-right-radius: 7px;
-	border: none;
 }
 
 .main-wrapper {
@@ -114,7 +94,7 @@ html {
 }
 
 .tab-item.is-active {
-	border-bottom: 3px solid #e8b4b8;
+	border-bottom: 3px solid #74bdcb;
 	padding-bottom: 5px;
 }
 </style>

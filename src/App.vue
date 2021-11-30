@@ -10,6 +10,19 @@
 			/>
 			<button class="new-task-button">+ Add</button>
 		</div>
+		<nav>
+			<ul class="tab-wrapper">
+				<li class="tab-item is-active">
+					<button class="tab-button">All</button>
+				</li>
+				<li class="tab-item">
+					<button class="tab-button">Current</button>
+				</li>
+				<li class="tab-item">
+					<button class="tab-button">Completed</button>
+				</li>
+			</ul>
+		</nav>
 	</main>
 </template>
 
@@ -73,5 +86,35 @@ html {
 	color: #6b6b6b;
 	margin-top: 0;
 	text-align: center;
+	margin-bottom: 25px;
+}
+
+.tab-wrapper {
+	display: flex;
+	list-style: none;
+	justify-content: center;
+	padding: 0;
+	margin: 40px 0;
+}
+
+.tab-item {
+	margin: 0 15px;
+}
+
+.tab-button {
+	border: 0;
+	background-color: #fff;
+	color: #6b6b6b;
+	font-weight: bold;
+	letter-spacing: 0.8px;
+}
+
+.tab-button:hover {
+	cursor: pointer;
+}
+
+.tab-item.is-active {
+	border-bottom: 3px solid #e8b4b8;
+	padding-bottom: 5px;
 }
 </style>

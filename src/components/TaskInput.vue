@@ -7,7 +7,13 @@
 			type="text"
 			placeholder="Type here to create"
 		/>
-		<button @click="addTodo" class="new-task-button">+ Add</button>
+		<button
+			@click="addTodo"
+			v-bind:disabled="newInput.length === 0"
+			class="new-task-button"
+		>
+			+ Add
+		</button>
 	</div>
 </template>
 
@@ -21,7 +27,8 @@ export default {
 	methods: {
 		addTodo: function () {
 			console.log('인풋 값', this.newInput);
-			localStorage.setItem(this.newInput, this.newInput);
+			let obj = { done: false, item: this.newInput };
+			localStorage.setItem(this.newInput, JSON.stringify(obj));
 			this.newInput = ''; //클릭이 되면 비워주기
 		},
 	},
@@ -51,7 +58,7 @@ export default {
 
 .new-task-button {
 	padding: 18px 24px;
-	background-color: #e8b4b8;
+	background-color: #74bdcb;
 	color: #fff;
 	font-weight: bold;
 	border-top-right-radius: 7px;

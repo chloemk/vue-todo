@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# Vue Todo-List
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Using Vue 3 + Vite
 
-## Recommended IDE Setup
+---
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## 기능 구현
+
+[x] 새로운 투두 입력 시 리스트에 추가
+[x] 새로운 투두 입력 시 엔터로 추가 기능
+[x] 새로운 투두 입력 시 로컬스토리지에 저장
+[x] 새로운 투두 입력 시 아무것도 입력되지 않았다면 추가하지 않음
+[x] 투두 삭제할 시 리스트에서 삭제
+[x] 투두 삭제할 시 로컬스토리지에서 삭제
+[x] 클리어 버튼 클릭 시 전체 투두 삭제
+
+## 에러노트

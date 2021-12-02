@@ -26,10 +26,8 @@ export default {
 	},
 	methods: {
 		addTodo: function () {
-			console.log('인풋 값', this.newInput);
-			let obj = { done: false, item: this.newInput };
-			localStorage.setItem(this.newInput, JSON.stringify(obj));
-			this.newInput = ''; //클릭이 되면 비워주기
+			this.$emit('addTodos', this.newInput);
+			this.newInput = '';
 		},
 	},
 };

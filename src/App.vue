@@ -2,7 +2,7 @@
 	<main class="main-wrapper">
 		<h1 class="page-title">TODO-LIST</h1>
 		<p class="subtitle">Let's get things done!</p>
-		<task-input></task-input>
+		<task-input v-on:addTodos="addTodo"></task-input>
 		<nav>
 			<ul class="tab-wrapper">
 				<li class="tab-item is-active">
@@ -13,7 +13,10 @@
 				</li>
 			</ul>
 		</nav>
-		<task-list></task-list>
+		<task-list
+			v-bind:newtodos="todoItems"
+			v-on:removeTodo="removeItem"
+		></task-list>
 	</main>
 </template>
 
@@ -22,11 +25,35 @@ import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
 
 export default {
+	data: function () {
+		return {
+			todoItems: [],
+		};
+	},
 	components: {
 		'task-input': TaskInput,
 		'task-list': TaskList,
 	},
 	methods: {
+		//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
+		created: function () {
+			if (localStorage.length > 0) {
+				for (let i = 0; i < localStorage.length; i++) {
+					if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+						this.todoItems.push(localStorage.key(i));
+					}
+				}
+			}
+		},
+		addTodo: function (inputItem) {
+			console.log('인풋 값', inputItem);
+			localStorage.setItem(inputItem, inputItem);
+			this.todoItems.push(inputItem);
+		},
+		removeItem: function (todo, idx) {
+			localStorage.removeItem(todo);
+			this.todoItems.splice(idx, 1);
+		},
 		clearTodo: function () {
 			localStorage.clear();
 		},

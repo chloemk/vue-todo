@@ -1,7 +1,7 @@
 <template>
 	<ul class="task-list">
 		<li
-			v-for="(todo, idx) in todoItems"
+			v-for="(todo, idx) in newtodos"
 			v-bind:key="todo"
 			class="task-list-item"
 		>
@@ -21,27 +21,12 @@
 
 <script>
 export default {
-	data: function () {
-		return {
-			todoItems: [],
-		};
-	},
+	props: ['newtodos'],
 	methods: {
 		editItem: function () {},
 		removeItem: function (todo, idx) {
-			localStorage.removeItem(todo);
-			this.todoItems.splice(idx, 1);
+			this.$emit('removeTodo', todo, idx);
 		},
-	},
-	//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
-	created: function () {
-		if (localStorage.length > 0) {
-			for (let i = 0; i < localStorage.length; i++) {
-				if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-					this.todoItems.push(localStorage.key(i));
-				}
-			}
-		}
 	},
 };
 </script>

@@ -40,14 +40,17 @@ export default {
 			if (localStorage.length > 0) {
 				for (let i = 0; i < localStorage.length; i++) {
 					if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-						this.todoItems.push(localStorage.key(i));
+						this.todoItems.push(
+							JSON.parse(localStorage.getItem(localStorage.key(i)))
+						);
 					}
 				}
 			}
 		},
 		addTodo: function (inputItem) {
 			console.log('인풋 값', inputItem);
-			localStorage.setItem(inputItem, inputItem);
+			let obj = { complete: false, item: inputItem };
+			localStorage.setItem(inputItem, JSON.stringify(obj));
 			this.todoItems.push(inputItem);
 		},
 		removeItem: function (todo, idx) {
@@ -56,6 +59,7 @@ export default {
 		},
 		clearTodo: function () {
 			localStorage.clear();
+			this.todoItems = [];
 		},
 	},
 };

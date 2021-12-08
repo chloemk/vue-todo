@@ -1,24 +1,21 @@
 <template>
-	<div class="new-task-wrapper">
-		<input
-			v-model="newInput"
-			@keyup.enter="addTodo"
-			class="new-task-input"
-			type="text"
-			placeholder="Type here to create"
-		/>
-		<button
-			@click="addTodo"
-			v-bind:disabled="newInput.length === 0"
-			class="new-task-button"
-		>
-			+ Add
-		</button>
-	</div>
+	<form @submit.prevent="addTodo" v-bind:disabled="newInput.length === 0">
+		<div class="new-task-wrapper">
+			<input
+				v-model="newInput"
+				class="new-task-input"
+				type="text"
+				placeholder="Type here to create"
+			/>
+			<button type="submit" class="new-task-button">+ Add</button>
+		</div>
+	</form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
 	data: function () {
 		return {
 			newInput: '',
@@ -30,7 +27,7 @@ export default {
 			this.newInput = '';
 		},
 	},
-};
+});
 </script>
 
 <style>

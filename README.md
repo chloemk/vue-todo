@@ -1,6 +1,6 @@
 # Vue Todo-List
 
-Using Vue 3 + Vite
+Using Vue 2 + Vite
 
 ---
 
@@ -61,7 +61,9 @@ export default() {
 
 vue + vite 프로젝트에 typescript 적용했을 때 참고했었던 자료들
 
-> [How to add typescript to Vue 3 and Vite project](https://techinplanet.com/how-to-add-typescript-to-vue-3-and-vite-project/ 'How to add typescript to Vue 3 and Vite project') > [Vite Docs](https://vitejs.dev/guide/features.html#typescript 'Vite Docs') > [The missing migration guide: from Vue CLI to Vite](https://moiva.io/blog/the-missing-migration-guide-from-vue-cli-to-vite/ 'The missing migration guide: from Vue CLI to Vite')
+> [How to add typescript to Vue 3 and Vite project](https://techinplanet.com/how-to-add-typescript-to-vue-3-and-vite-project/ 'How to add typescript to Vue 3 and Vite project')
+> [Vite Docs](https://vitejs.dev/guide/features.html#typescript 'Vite Docs')
+> [The missing migration guide: from Vue CLI to Vite](https://moiva.io/blog/the-missing-migration-guide-from-vue-cli-to-vite/ 'The missing migration guide: from Vue CLI to Vite')
 
 더 공부해야할 부분
 

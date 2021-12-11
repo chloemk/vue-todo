@@ -2,7 +2,11 @@
 	<main class="main-wrapper">
 		<h1 class="page-title">TODO-LIST</h1>
 		<p class="subtitle">Let's get things done!</p>
-		<task-input v-on:addTodos="addTodo"></task-input>
+		<TaskInput
+			:newItem="newInput"
+			@update-input="updateTodo"
+			@add-todo="addTodo"
+		></TaskInput>
 		<nav>
 			<ul class="tab-wrapper">
 				<li class="tab-item is-active">
@@ -13,10 +17,10 @@
 				</li>
 			</ul>
 		</nav>
-		<task-list
+		<TaskList
 			v-bind:newtodos="todoItems"
 			v-on:removeTodo="removeItem"
-		></task-list>
+		></TaskList>
 	</main>
 </template>
 
@@ -28,11 +32,12 @@ export default {
 	data: function () {
 		return {
 			todoItems: [],
+			newInput: '',
 		};
 	},
 	components: {
-		'task-input': TaskInput,
-		'task-list': TaskList,
+		TaskInput,
+		TaskList,
 	},
 	methods: {
 		//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
@@ -47,11 +52,16 @@ export default {
 				}
 			}
 		},
-		addTodo: function (inputItem) {
-			console.log('인풋 값', inputItem);
-			let obj = { complete: false, item: inputItem };
-			localStorage.setItem(inputItem, JSON.stringify(obj));
-			this.todoItems.push(inputItem);
+		updateTodo: function (inputVal) {
+			console.log('인풋 값', inputVal);
+			this.newInput = inputVal;
+		},
+		addTodo: function () {
+			console.log('여기', this.newInput);
+			let obj = { complete: false, item: this.newInput };
+			localStorage.setItem(this.newInput, JSON.stringify(obj));
+			this.todoItems.push(this.newInput);
+			this.clearInput();
 		},
 		removeItem: function (todo, idx) {
 			localStorage.removeItem(todo);
@@ -60,6 +70,9 @@ export default {
 		clearTodo: function () {
 			localStorage.clear();
 			this.todoItems = [];
+		},
+		clearInput: function () {
+			this.newInput = '';
 		},
 	},
 };

@@ -1,33 +1,46 @@
 <template>
-	<form @submit.prevent="addTodo" v-bind:disabled="newInput.length === 0">
+	<form @submit.prevent="submitTodo">
 		<div class="new-task-wrapper">
 			<input
-				v-model="newInput"
-				class="new-task-input"
 				type="text"
+				class="new-task-input"
 				placeholder="Type here to create"
+				:value="newItem"
+				@input="inputHandler"
 			/>
 			<button type="submit" class="new-task-button">+ Add</button>
 		</div>
 	</form>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
-	data: function () {
-		return {
-			newInput: '',
-		};
-	},
-	methods: {
-		addTodo: function () {
-			this.$emit('addTodos', this.newInput);
-			this.newInput = '';
+<script>
+export default {
+	// props validation
+	props: {
+		newItem: {
+			type: String,
+			required: true,
 		},
 	},
-});
+	methods: {
+		inputHandler: function (e) {
+			// this.$emit('addTodos', this.newInput);
+			// this.newInput = '';
+			//이벤트 이름에는 항상 kebab-case 사용
+			this.$emit('update-input', e.target.value);
+		},
+		submitTodo: function () {
+			console.log('클릭', this.newItem);
+			if (this.newItem === '') {
+				// ! 인풋이 빈값이라면 모달 띄우기
+				alert('입력 후 버튼을 클릭해 주세요.');
+				return;
+			} else {
+				this.$emit('add-todo');
+			}
+		},
+	},
+};
 </script>
 
 <style>

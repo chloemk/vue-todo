@@ -1,31 +1,26 @@
 <template>
-	<ul class="task-list">
-		<li
-			v-for="(todo, idx) in newtodos"
-			v-bind:key="todo"
-			class="task-list-item"
-		>
-			<input type="checkbox" />
-			<p v-bind:class="{ done: todo.done }" class="task-list-text">
-				{{ todo }}
-			</p>
-			<div class="task-list-cta">
-				<button @click="editItem" class="task-list-btn">Edit</button>
-				<button @click="removeItem(todo, idx)" class="task-list-btn">
-					Delete
-				</button>
-			</div>
-		</li>
-	</ul>
+	<li class="task-list-item">
+		<input type="checkbox" />
+		<p class="task-list-text">
+			{{ todoProps }}
+		</p>
+		<div class="task-list-cta">
+			<button @click="editItem" class="task-list-btn">Edit</button>
+			<button @click="removeTodo" class="task-list-btn">Delete</button>
+		</div>
+	</li>
 </template>
 
 <script>
 export default {
-	props: ['newtodos'],
+	props: {
+		todoProps: String,
+		index: Number,
+	},
 	methods: {
 		editItem: function () {},
-		removeItem: function (todo, idx) {
-			this.$emit('removeTodo', todo, idx);
+		removeTodo: function () {
+			this.$emit('removeTodo', this.index);
 		},
 	},
 };
@@ -53,10 +48,6 @@ export default {
 	font-weight: bold;
 	flex: 1;
 	color: #6b6b6b;
-}
-
-.task-list {
-	padding: 0;
 }
 
 .task-list-btn {

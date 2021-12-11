@@ -17,16 +17,39 @@
 				</li>
 			</ul>
 		</nav>
-		<TaskList
-			v-bind:newtodos="todoItems"
-			v-on:removeTodo="removeItem"
-		></TaskList>
+		<ul class="task-list">
+			<TaskList
+				v-for="(todo, idx) in todoItems"
+				:key="idx"
+				:index="idx"
+				:todoProps="todo"
+				@removeTodo="removeItem"
+			></TaskList>
+		</ul>
 	</main>
 </template>
 
 <script>
 import TaskInput from './components/TaskInput.vue';
 import TaskList from './components/TaskList.vue';
+
+// 키 만들기
+const STORAGE_KEY = 'vue-todo-key';
+
+// API
+const storage = {
+	save(val) {
+		// 배열을 받아서 문자열로 바꾸고 로컬스토리지에 저장
+		const parsed = JSON.stringify(val);
+		localStorage.setItem(STORAGE_KEY, parsed);
+	},
+	fetch() {
+		// 로컬스토리지에서 값을 가져왔을 때 null일 경우를 대비해 [] 초기화를 해준다.
+		const todos = localStorage.getItem(STORAGE_KEY) || '[]';
+		const parsedResult = JSON.parse(todos);
+		return parsedResult;
+	},
+};
 
 export default {
 	data: function () {
@@ -40,32 +63,39 @@ export default {
 		TaskList,
 	},
 	methods: {
+		getTodos: function () {
+			this.todoItems = storage.fetch();
+		},
 		//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
 		created: function () {
-			if (localStorage.length > 0) {
-				for (let i = 0; i < localStorage.length; i++) {
-					if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-						this.todoItems.push(
-							JSON.parse(localStorage.getItem(localStorage.key(i)))
-						);
-					}
-				}
-			}
+			// if (localStorage.length > 0) {
+			// 	for (let i = 0; i < localStorage.length; i++) {
+			// 		if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+			// 			this.todoItems.push(
+			// 				JSON.parse(localStorage.getItem(localStorage.key(i)))
+			// 			);
+			// 		}
+			// 	}
+			// }
+			console.log('생성됨!!!!');
+			this.getTodos();
 		},
 		updateTodo: function (inputVal) {
 			console.log('인풋 값', inputVal);
 			this.newInput = inputVal;
 		},
 		addTodo: function () {
-			console.log('여기', this.newInput);
-			let obj = { complete: false, item: this.newInput };
-			localStorage.setItem(this.newInput, JSON.stringify(obj));
-			this.todoItems.push(this.newInput);
+			const value = this.newInput;
+			this.todoItems.push(value);
+			storage.save(this.todoItems);
+			// let obj = { complete: false, item: this.newInput };
 			this.clearInput();
 		},
-		removeItem: function (todo, idx) {
-			localStorage.removeItem(todo);
+		removeItem: function (idx) {
+			console.log('idx', idx);
 			this.todoItems.splice(idx, 1);
+			// 투두를 삭제한 배열을 전부 로컬스토리지에 덮어씌우는 방식으로 저장
+			storage.save(this.todoItems);
 		},
 		clearTodo: function () {
 			localStorage.clear();
@@ -140,5 +170,9 @@ html {
 .tab-item.is-active {
 	border-bottom: 3px solid #74bdcb;
 	padding-bottom: 5px;
+}
+
+.task-list {
+	padding: 0;
 }
 </style>

@@ -104,13 +104,13 @@ export default {
 			this.newInput = '';
 		},
 		sortTodo: function () {
-			this.todoItems.sort((a, b) => {
-				if (this.todoItems.item) {
-					return a[this.todoItems.item] > b[this.todoItems.item] ? -1 : 1;
-				} else {
+			if (this.todoItems.length !== 0) {
+				this.todoItems.sort((a, b) => {
 					return a[this.todoItems.item] > b[this.todoItems.item] ? 1 : -1;
-				}
-			});
+				});
+			} else {
+				return alert('할 일을 추가해주세요.');
+			}
 		},
 	},
 };

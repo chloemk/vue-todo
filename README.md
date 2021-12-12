@@ -97,15 +97,18 @@ computed: {
 
 ### computed 속성
 
-> computed 속성은 언제 사용하는가?
+#### computed 속성은 언제 사용하는가?
 
 1. 템플릿 표현식을 간결하고 직관적으로 보이게 할 때
 2. 조건에 따라 HTML 클래스를 추가하거나 변경할 때
 3. Vuex 스토어의 state 값을 접근할 때
 4. Vue i18n과 같은 다국어 라이브러리를 사용할 때
-   > 언제 사용하지 않는가?
-5. HTTP 요청과 같은 많은 리소스가 할애될 때 -> watch나 methods에 넣어 사용
-   > computed 속성의 특징
+
+#### 언제 사용하지 않는가?
+
+1. HTTP 요청과 같은 많은 리소스가 할애될 때 -> watch나 methods에 넣어 사용
+
+#### computed 속성의 특징
 
 - `computed` 속성은 종속 대상에 따라 캐싱되며, 의존하는 값이 변할 때만 실행된다. (반면 `methods`는 렌더링 될 때만 함수가 실행된다.)
 - `가독성 향상`
@@ -113,10 +116,12 @@ computed: {
 
 ---
 
-- [] 투두 수정하기
-- [] 투두 드래그앤드롭
+- [ ] 투두 수정하기
+- [ ] 투두 드래그앤드롭
 
 ---
+
+### 마주한 에러
 
 `Invalid prop: type check failed for prop "TodoProps". Expected String with value "[object Object]", got Object`
 string value로 prop을 전달해줬어야했지만 object로 전달해서 일어난 오류였다. props로 내려주는 value를 string에서 object 타입의 value로 변경하여 내려줘서 해결하였다.

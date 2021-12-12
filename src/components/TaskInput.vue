@@ -24,15 +24,11 @@ export default {
 	},
 	methods: {
 		inputHandler: function (e) {
-			// this.$emit('addTodos', this.newInput);
-			// this.newInput = '';
 			//이벤트 이름에는 항상 kebab-case 사용
 			this.$emit('update-input', e.target.value);
 		},
 		submitTodo: function () {
-			console.log('클릭', this.newItem);
 			if (this.newItem === '') {
-				// ! 인풋이 빈값이라면 모달 띄우기
 				alert('입력 후 버튼을 클릭해 주세요.');
 				return;
 			} else {

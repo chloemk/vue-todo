@@ -33,7 +33,6 @@ export default {
 			this.$emit('remove-todo', this.index);
 		},
 		isChecked: function (e) {
-			console.log('체크됬는지 안됬는지', e.target.checked);
 			this.$emit('complete-toggle', e.target.checked, this.index);
 		},
 	},

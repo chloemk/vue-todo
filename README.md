@@ -9,6 +9,7 @@ Using Vue 2 + Vite
 - [x] 투두 조회하기
   - [x] 구조 변경
     > v-for를 TaskInput 컴포넌트에서 직접 돌려줬는데 이럴 때 전체 투도 데이터를 props로 내려 줘야 하기 때문에 불필요한 props 내리기라고 판단되어 상위 컴포넌트 (전체 데이터가 있는 컴포넌트)에서 TaskInput 컴포넌트를 import 한 후 v-for를 적용하여 배열의 각 요소를 투두리스트로 만들어 주었다.
+  - [x] 투두 리스트 오름차순 내림차순 정렬 기능 추가
 
 ---
 
@@ -62,7 +63,63 @@ export default() {
 
 ---
 
-- [x] 투두 수정하기
+- [x] 투두 완료 표시 기능
+  > v-bind:class를 이용하여 클래스를 바인딩할 수 있고, :style을 이용하여 스타일을 바인딩할 수도 있다.
+
+```js
+// :class 바인딩 - 인라인 스타일 조작
+<p :class="todoProps.checked ? 'completed' : ''" ></p>
+
+<style>
+.completed {
+  text-decoration: line-through;
+}
+</style>
+```
+
+```js
+// :style 바인딩 - 인라인 스타일 조작
+<p :style="[todoProps.checked ? {'text-decoration:line-through'} : {''}]" ></p>
+```
+
+> :class로 바인딩 하다보면 복잡해질 수 있기 때문에 computed 속성을 대신 사용할 수 있다.
+
+```js
+// computed 속성을 이용하여 인라인 스타일 조작
+<p class="task-list-text" :class="toggleClass"></p>
+
+computed: {
+  toggleClass() {
+    return this.todoProps.checked ? 'completed' : null;
+  },
+},
+```
+
+### computed 속성
+
+> computed 속성은 언제 사용하는가?
+
+1. 템플릿 표현식을 간결하고 직관적으로 보이게 할 때
+2. 조건에 따라 HTML 클래스를 추가하거나 변경할 때
+3. Vuex 스토어의 state 값을 접근할 때
+4. Vue i18n과 같은 다국어 라이브러리를 사용할 때
+   > 언제 사용하지 않는가?
+5. HTTP 요청과 같은 많은 리소스가 할애될 때 -> watch나 methods에 넣어 사용
+   > computed 속성의 특징
+
+- `computed` 속성은 종속 대상에 따라 캐싱되며, 의존하는 값이 변할 때만 실행된다. (반면 `methods`는 렌더링 될 때만 함수가 실행된다.)
+- `가독성 향상`
+- computed 속성은 인자를 받지 않는다.
+
+---
+
+- [] 투두 수정하기
+- [] 투두 드래그앤드롭
+
+---
+
+`Invalid prop: type check failed for prop "TodoProps". Expected String with value "[object Object]", got Object`
+string value로 prop을 전달해줬어야했지만 object로 전달해서 일어난 오류였다. props로 내려주는 value를 string에서 object 타입의 value로 변경하여 내려줘서 해결하였다.
 
 ---
 

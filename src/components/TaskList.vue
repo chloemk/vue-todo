@@ -1,12 +1,13 @@
 <template>
 	<li class="task-list-item">
 		<input type="checkbox" @change="isChecked" :checked="todoProps.checked" />
-		<p class="task-list-text" :class="todoProps.checked ? 'completed' : ''">
+		<p class="task-list-text" :class="toggleClass">
+			<!-- :class="todoProps.checked ? 'completed' : ''" -->
 			<!-- :style="todoProps.checked ? 'text-decoration:line-through' : ''" -->
 			{{ todoProps.item }}
 		</p>
 		<div class="task-list-cta">
-			<button @click="editItem" class="task-list-btn">Edit</button>
+			<button @click="editTodo" class="task-list-btn">Edit</button>
 			<button @click="removeTodo" class="task-list-btn">Delete</button>
 		</div>
 	</li>
@@ -18,8 +19,16 @@ export default {
 		todoProps: Object,
 		index: Number,
 	},
+	// 클래스의 조건 처리
+	computed: {
+		toggleClass() {
+			return this.todoProps.checked ? 'completed' : null;
+		},
+	},
 	methods: {
-		editItem: function () {},
+		editTodo: function () {
+			this.$emit('edit-Todo', this.index);
+		},
 		removeTodo: function () {
 			this.$emit('remove-todo', this.index);
 		},

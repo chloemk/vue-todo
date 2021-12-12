@@ -97,8 +97,12 @@ export default {
 		},
 		editItem: function () {},
 		clearTodo: function () {
-			localStorage.clear();
-			this.todoItems = [];
+			if (this.todoItems.length !== 0) {
+				localStorage.clear();
+				this.todoItems = [];
+			} else {
+				return alert('할 일을 추가한 후 삭제해주세요.');
+			}
 		},
 		clearInput: function () {
 			this.newInput = '';

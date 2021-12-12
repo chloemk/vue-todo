@@ -1,8 +1,9 @@
 <template>
 	<li class="task-list-item">
-		<input type="checkbox" />
-		<p class="task-list-text">
-			{{ todoProps }}
+		<input type="checkbox" @change="isChecked" :checked="todoProps.checked" />
+		<p class="task-list-text" :class="todoProps.checked ? 'completed' : ''">
+			<!-- :style="todoProps.checked ? 'text-decoration:line-through' : ''" -->
+			{{ todoProps.item }}
 		</p>
 		<div class="task-list-cta">
 			<button @click="editItem" class="task-list-btn">Edit</button>
@@ -14,13 +15,17 @@
 <script>
 export default {
 	props: {
-		todoProps: String,
+		todoProps: Object,
 		index: Number,
 	},
 	methods: {
 		editItem: function () {},
 		removeTodo: function () {
-			this.$emit('removeTodo', this.index);
+			this.$emit('remove-todo', this.index);
+		},
+		isChecked: function (e) {
+			console.log('체크됬는지 안됬는지', e.target.checked);
+			this.$emit('complete-toggle', e.target.checked, this.index);
 		},
 	},
 };
@@ -61,7 +66,10 @@ export default {
 	cursor: pointer;
 }
 
-.done {
+.completed {
 	text-decoration: line-through;
+	text-decoration-thickness: 2px;
+	opacity: 0.7;
+	text-decoration-color: #6b6b6b;
 }
 </style>

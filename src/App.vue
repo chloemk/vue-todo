@@ -23,7 +23,8 @@
 				:key="idx"
 				:index="idx"
 				:todoProps="todo"
-				@removeTodo="removeItem"
+				@remove-todo="removeItem"
+				@complete-toggle="checkboxToggle"
 			></TaskList>
 		</ul>
 	</main>
@@ -68,15 +69,6 @@ export default {
 		},
 		//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
 		created: function () {
-			// if (localStorage.length > 0) {
-			// 	for (let i = 0; i < localStorage.length; i++) {
-			// 		if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-			// 			this.todoItems.push(
-			// 				JSON.parse(localStorage.getItem(localStorage.key(i)))
-			// 			);
-			// 		}
-			// 	}
-			// }
 			console.log('생성됨!!!!');
 			this.getTodos();
 		},
@@ -86,15 +78,20 @@ export default {
 		},
 		addTodo: function () {
 			const value = this.newInput;
-			this.todoItems.push(value);
+			this.todoItems.push({ checked: false, item: value });
 			storage.save(this.todoItems);
 			// let obj = { complete: false, item: this.newInput };
 			this.clearInput();
 		},
 		removeItem: function (idx) {
-			console.log('idx', idx);
+			console.log('안찍혀', idx);
 			this.todoItems.splice(idx, 1);
 			// 투두를 삭제한 배열을 전부 로컬스토리지에 덮어씌우는 방식으로 저장
+			storage.save(this.todoItems);
+		},
+		checkboxToggle: function (checked, idx) {
+			// 업데이트된 checked도 투두 배열에 업데이트 해준다.
+			this.todoItems[idx].checked = checked;
 			storage.save(this.todoItems);
 		},
 		clearTodo: function () {

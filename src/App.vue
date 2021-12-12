@@ -13,6 +13,9 @@
 					<button class="tab-button">All</button>
 				</li>
 				<li class="tab-item">
+					<button @click="sortTodo" class="tab-button">Sort</button>
+				</li>
+				<li class="tab-item">
 					<button @click="clearTodo" class="tab-button">Clear</button>
 				</li>
 			</ul>
@@ -25,6 +28,7 @@
 				:todoProps="todo"
 				@remove-todo="removeItem"
 				@complete-toggle="checkboxToggle"
+				@edit-Todo="editItem"
 			></TaskList>
 		</ul>
 	</main>
@@ -67,24 +71,21 @@ export default {
 		getTodos: function () {
 			this.todoItems = storage.fetch();
 		},
-		//created는 lifecycle 중 instance가 생성되자마자 호출되는 lifecycle hook이다.
+		// created: 인스턴스가 생성되자마자 실행된다.
 		created: function () {
 			console.log('생성됨!!!!');
 			this.getTodos();
 		},
 		updateTodo: function (inputVal) {
-			console.log('인풋 값', inputVal);
 			this.newInput = inputVal;
 		},
 		addTodo: function () {
 			const value = this.newInput;
 			this.todoItems.push({ checked: false, item: value });
 			storage.save(this.todoItems);
-			// let obj = { complete: false, item: this.newInput };
 			this.clearInput();
 		},
 		removeItem: function (idx) {
-			console.log('안찍혀', idx);
 			this.todoItems.splice(idx, 1);
 			// 투두를 삭제한 배열을 전부 로컬스토리지에 덮어씌우는 방식으로 저장
 			storage.save(this.todoItems);
@@ -94,12 +95,22 @@ export default {
 			this.todoItems[idx].checked = checked;
 			storage.save(this.todoItems);
 		},
+		editItem: function () {},
 		clearTodo: function () {
 			localStorage.clear();
 			this.todoItems = [];
 		},
 		clearInput: function () {
 			this.newInput = '';
+		},
+		sortTodo: function () {
+			this.todoItems.sort((a, b) => {
+				if (this.todoItems.item) {
+					return a[this.todoItems.item] > b[this.todoItems.item] ? -1 : 1;
+				} else {
+					return a[this.todoItems.item] > b[this.todoItems.item] ? 1 : -1;
+				}
+			});
 		},
 	},
 };

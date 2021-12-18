@@ -95,7 +95,9 @@ export default {
 			this.todoItems[idx].checked = checked;
 			storage.save(this.todoItems);
 		},
-		editItem: function () {},
+		editItem: function () {
+			storage.save(this.todoItems);
+		},
 		clearTodo: function () {
 			if (this.todoItems.length !== 0) {
 				localStorage.clear();

@@ -1,13 +1,19 @@
 <template>
 	<li class="task-list-item">
 		<input type="checkbox" @change="isChecked" :checked="todoProps.checked" />
-		<p class="task-list-text" :class="toggleClass">
-			<!-- :class="todoProps.checked ? 'completed' : ''" -->
-			<!-- :style="todoProps.checked ? 'text-decoration:line-through' : ''" -->
+		<p class="task-list-text" :class="toggleClass" v-show="!isEditing">
 			{{ todoProps.item }}
 		</p>
+
+		<form v-show="isEditing" @submit.prevent="hideForm">
+			<input type="text" v-model="todoProps.item" class="task-list-edit" />
+			<button class="task-list-btn">Close X</button>
+		</form>
+
 		<div class="task-list-cta">
-			<button @click="editTodo" class="task-list-btn">Edit</button>
+			<button v-if="!isEditing" @click="showForm" class="task-list-btn">
+				Edit
+			</button>
 			<button @click="removeTodo" class="task-list-btn">Delete</button>
 		</div>
 	</li>
@@ -15,6 +21,11 @@
 
 <script>
 export default {
+	data: function () {
+		return {
+			isEditing: false,
+		};
+	},
 	props: {
 		todoProps: Object,
 		index: Number,
@@ -26,14 +37,19 @@ export default {
 		},
 	},
 	methods: {
-		editTodo: function () {
-			this.$emit('edit-Todo', this.index);
-		},
 		removeTodo: function () {
 			this.$emit('remove-todo', this.index);
 		},
 		isChecked: function (e) {
 			this.$emit('complete-toggle', e.target.checked, this.index);
+		},
+		showForm: function () {
+			console.log('에디팅 열기', this.isEditing);
+			this.isEditing = true;
+		},
+		hideForm: function () {
+			this.isEditing = false;
+			this.$emit('edit-Todo');
 		},
 	},
 };
@@ -49,6 +65,16 @@ export default {
 	align-items: center;
 	padding: 0 16px;
 	margin-bottom: 20px;
+}
+
+.task-list-edit {
+	padding: 16px;
+	letter-spacing: 0.8px;
+	font-size: 1em;
+	margin-left: 12px;
+	border: 1px solid #6b6b6b;
+	border-radius: 8px;
+	flex: 1;
 }
 
 .task-list-cta {

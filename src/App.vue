@@ -117,6 +117,9 @@ export default {
 			}
 		},
 	},
+	mounted() {
+		this.getTodos();
+	},
 };
 </script>
 
